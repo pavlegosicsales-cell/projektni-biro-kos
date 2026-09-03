@@ -1427,6 +1427,12 @@ section { padding-block: var(--section-y); }
   .nav.is-open .nav-cta { display: block; width: 100%; padding: 0 8px 8px; }
   .nav.is-open .nav-cta .btn { width: 100%; justify-content: space-between; }
   .nav.is-open .nav-bar { background: rgba(27, 42, 78, .97); }
+
+  /* Kada se meni otvori, traka se vraca na teget podlogu, pa tekst mora
+     nazad u belo. Bez ovoga stanje is-down (bela traka, tamni linkovi)
+     ostaje na snazi i linkovi se izgube na tegetu. */
+  .nav.is-down.is-open .nav-link,
+  .nav.is-down.is-open .nav-toggle { color: var(--white); }
   .nav-link { min-height: 44px; width: 100%; }
 
   .hero { padding: 150px 0 80px; }
@@ -1534,16 +1540,7 @@ section { padding-block: var(--section-y); }
    Preliv preko fotografije: na uzim ekranima levi preliv bi progutao
    celu sliku, pa se prebacuje na vertikalni.
    ========================================================================== */
-@media (max-width: 900px) {
-  .hero::after,
-  .footer::after,
-  .page-head::after {
-    background: linear-gradient(180deg,
-      rgba(27, 42, 78, .72) 0%,
-      rgba(27, 42, 78, .62) 45%,
-      rgba(27, 42, 78, .92) 100%);
-  }
-}
+
 
 @media (max-width: 900px) {
   .project { grid-template-columns: 1fr; }
@@ -1606,4 +1603,31 @@ html.lenis body { height: auto; }
 /* Tapkanje ne ostavlja sivi pravougaonik na Androidu */
 a, button, .choice, .service-row, .faq-q {
   -webkit-tap-highlight-color: rgba(27, 42, 78, .12);
+}
+
+/* ==========================================================================
+   TELEFON, isto kao Constra
+   Levi preliv od 38 posto radi samo na sirokom ekranu. Na telefonu se
+   okrece u vertikalni: puna boja gore koja se spusta u fotografiju.
+   ========================================================================== */
+@media (max-width: 900px) {
+  /* Hero: puna teget boja gore, pa prelaz u sliku nadole. */
+  .hero::after,
+  .page-head::after {
+    background:
+      linear-gradient(180deg,
+        var(--deep) 0%,
+        var(--deep) 38%,
+        rgba(27, 42, 78, 0) 100%),
+      linear-gradient(180deg,
+        rgba(27, 42, 78, .30) 0%,
+        rgba(27, 42, 78, .45) 100%);
+  }
+
+  /* Footer je na telefonu jednobojan, bez fotografije. */
+  .footer > img { display: none; }
+  .footer::after { background: var(--deep); }
+
+  /* Kartica projekta: pilule, naslov, tekst, dugme, pa slika na dnu. */
+  .project-img { order: 0; }
 }
