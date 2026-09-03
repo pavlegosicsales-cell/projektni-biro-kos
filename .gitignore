@@ -1,0 +1,8 @@
+# Windows i macOS smece
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Privremeni snimci ekrana iz razvoja
+_*.png
+_*.html
